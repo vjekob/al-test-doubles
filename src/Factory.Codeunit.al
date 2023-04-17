@@ -4,9 +4,11 @@ codeunit 50110 Factory
         _logger: Interface ILogger;
         _permissionChecker: Interface IPermissionChecker;
         _currencyConverter: Interface ICurrencyConverter;
+        _httpInvoker: Interface IHttpInvoker;
         _loggerDefined: Boolean;
         _permissionCheckerDefined: Boolean;
         _currencyConverterDefined: Boolean;
+        _httpInvokerDefined: Boolean;
 
     procedure Logger(): Interface ILogger
     var
@@ -38,6 +40,16 @@ codeunit 50110 Factory
         exit(_currencyConverter);
     end;
 
+    procedure HttpInvoker(): Interface IHttpInvoker
+    var
+        HttpInvoker: Codeunit "HttpClient Http Invoker";
+    begin
+        if not _httpInvokerDefined then
+            SetHttpInvoker(HttpInvoker);
+
+        exit(_httpInvoker);
+    end;
+
     procedure SetLogger(logger: Interface ILogger)
     begin
         _logger := logger;
@@ -54,6 +66,12 @@ codeunit 50110 Factory
     begin
         _currencyConverter := currencyConverter;
         _currencyConverterDefined := true;
+    end;
+
+    procedure SetHttpInvoker(httpInvoker: Interface IHttpInvoker)
+    begin
+        _httpInvoker := httpInvoker;
+        _httpInvokerDefined := true;
     end;
 }
 
